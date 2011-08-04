@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CLTester' target in the 'CLTester' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
