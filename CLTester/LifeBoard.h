@@ -8,11 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+@interface IntArray2D : NSObject {
+@private
+    unsigned int height;
+    unsigned int width;
+    int * array;
+}
+
+-(id) initWithWidth:(int) setWidth andHeight:(int)setHeight;
+-(int) valueAtX:(int)x andY:(int)y;
+-(void) setValue:(int)value atX:(int)x andY:(int)y;
+-(void) printArray;
+
+@end
+
+
 @interface LifeBoard : NSObject
 {    
     int height;
     int width;
-    int** board;
+    IntArray2D *board;
 }
 
 -(id) initWithWidth:(int) w andHeight:(int) h;

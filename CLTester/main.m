@@ -17,20 +17,30 @@ int main (int argc, const char * argv[])
     // insert code here...
     NSLog(@"Hello, World!");
     
-    LifeBoard * life = [[LifeBoard alloc] initWithWidth:20 andHeight:10];
+    IntArray2D *testArray = [[IntArray2D alloc] initWithWidth:10 andHeight:4];
+   
+    [testArray setValue:5 atX:4 andY:1];
+    [testArray printArray];
     
-    [life printBoard];
-    [life flipCellX:5 Y:0];
-    [life flipCellX:5 Y:1];
-    [life flipCellX:5 Y:2];
+    LifeBoard *testBoard = [[LifeBoard alloc] initWithWidth:40 andHeight:20];
     
-    [life printBoard];
-    [life iterate];
-    [life printBoard];
+    [testBoard flipCellX:4 Y:10];
+    [testBoard flipCellX:4 Y:11];
+    [testBoard flipCellX:4 Y:12];
+    [testBoard flipCellX:4 Y:13];
+    [testBoard flipCellX:5 Y:14];
+    [testBoard flipCellX:4 Y:14];
+    [testBoard flipCellX:5 Y:15];
+    [testBoard printBoard];
+    
+    int i;
+    for (i=0; i<100; i++){
+        [testBoard iterate];
+        [testBoard printBoard];
+    }
     
     
-    
-    [life dealloc];
+    [testArray dealloc];
     [pool drain];
     return 0;
 }
