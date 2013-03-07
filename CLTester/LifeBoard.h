@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef struct{
+    int x;
+    int y;
+}board_point;
+
 @interface IntArray2D : NSObject {
-@private
+@protected
     unsigned int height;
     unsigned int width;
     int * array;
@@ -22,15 +27,22 @@
 
 @end
 
+@interface IntArray2D_wrap : IntArray2D{
+}
+-(int) valueAtX:(int)x andY:(int)y;
+@end
 
 @interface LifeBoard : NSObject
 {    
     int height;
     int width;
-    IntArray2D *board;
+    IntArray2D_wrap *board;
 }
+@property(readonly) int height;
+@property(readonly) int width;
 
 -(id) initWithWidth:(int) w andHeight:(int) h;
+-(void) resizeBoardWithWidth:(int) w andHeight:(int) h;
 -(void) printBoard;
 -(void) zeroOutBoard;
 -(void) flipCellX:(int)x Y:(int)y;

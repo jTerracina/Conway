@@ -34,12 +34,19 @@
 }
 
 -(int) valueAtX:(int)x andY:(int)y{
-    return array[y*width+x];
+    if (x >= 0 && x < height && y >= 0 && y < height){
+        return array[y*width+x];
+    }
+    else{
+        return 0;
+    }
 }
 
 -(void) setValue:(int)value atX:(int)x andY:(int)y
 {
-    array[y*width+x]= value;
+    if (x >= 0 && x < height && y >= 0 && y < height){
+        array[y*width+x]= value;
+    }
 }
 
 -(void) printArray
@@ -61,13 +68,24 @@
 
 @end
 
+@implementation IntArray2D_wrap
+-(int) valueAtX:(int)x andY:(int)y{
+    int xx = x;
+    int yy = y;
+    while (xx < 0){xx += width;}
+    while (yy < 0){yy += height;}
+    return array[(yy%height)*width + (xx%width)];
+}
 
+
+@end
 
 
 
 
 @implementation LifeBoard
-
+@synthesize height;
+@synthesize width;
 - (id)init
 {
     self = [super init];
@@ -83,12 +101,20 @@
     self = [self init];
     height = h;
     width = w;
-    board = [[IntArray2D alloc] initWithWidth:width andHeight:height];
+    board = [[IntArray2D_wrap alloc] initWithWidth:width andHeight:height];
     
     [self zeroOutBoard];
     return self;
 }
 
+-(void) resizeBoardWithWidth:(int)w andHeight:(int)h {
+    [board dealloc];
+    height = h;
+    width = w;
+    board = [[IntArray2D_wrap alloc] initWithWidth:w andHeight:h];
+    [self zeroOutBoard];
+    
+}
 
 -(void) printBoard
 {
@@ -151,7 +177,7 @@
 -(void) iterate
 {
     int x,y;
-    IntArray2D *newboard = [[IntArray2D alloc] initWithWidth:width andHeight:height];
+    IntArray2D_wrap *newboard = [[IntArray2D_wrap alloc] initWithWidth:width andHeight:height];
     
     
     for (x=0; x < width; x++)
@@ -180,7 +206,7 @@
             }
         }
     }
-    IntArray2D *tmp = board;
+    IntArray2D_wrap *tmp = board;
     board = newboard;
     [tmp dealloc];
 }
@@ -188,14 +214,14 @@
 -(int) neighborSumAtX:(int)x Y:(int)y 
 {
     int sum = 0;
-    if ((x>0)&&(y>0))           {sum += [self cellAtX:x-1 Y:y-1];}
-    if (y>0)                    {sum += [self cellAtX:x Y:y-1];}
-    if ((x<width)&&(y>0))       {sum += [self cellAtX:x+1 Y:y-1];}
-    if (x>0)                    {sum += [self cellAtX:x-1 Y:y];}
-    if (x<width)                {sum += [self cellAtX:x+1 Y:y];}
-    if ((x>0)&&(y<height))      {sum += [self cellAtX:x-1 Y:y+1];}
-    if (y<height)               {sum += [self cellAtX:x Y:y+1];}
-    if ((x<width)&&(y<height))  {sum += [self cellAtX:x+1 Y:y+1];}
+    if ((x> -1)&&(y>-1))           {sum += [self cellAtX:x-1 Y:y-1];}
+    if (y>-1)                    {sum += [self cellAtX:x Y:y-1];}
+    if ((x<width+1)&&(y>-1))       {sum += [self cellAtX:x+1 Y:y-1];}
+    if (x>-1)                    {sum += [self cellAtX:x-1 Y:y];}
+    if (x<width+1)                {sum += [self cellAtX:x+1 Y:y];}
+    if ((x>-1)&&(y<height+1))      {sum += [self cellAtX:x-1 Y:y+1];}
+    if (y<height+1)               {sum += [self cellAtX:x Y:y+1];}
+    if ((x<width+1)&&(y<height+1))  {sum += [self cellAtX:x+1 Y:y+1];}
     return sum;
 }
 -(void) dealloc
