@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41109B3216E684C900331367 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41109B3116E684C900331367 /* icon.icns */; };
 		412040FF16EFC2C6008166A8 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 412040FE16EFC2C6008166A8 /* README.txt */; };
+		415B3A6916EFC6C000DC435C /* Conway.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52670FCC13E8B40B009CF4F1 /* Conway.app */; };
 		52670FD113E8B40B009CF4F1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52670FD013E8B40B009CF4F1 /* Cocoa.framework */; };
 		52670FDB13E8B40B009CF4F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52670FD913E8B40B009CF4F1 /* InfoPlist.strings */; };
 		52670FDD13E8B40B009CF4F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52670FDC13E8B40B009CF4F1 /* main.m */; };
@@ -38,6 +39,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		415B3A6816EFC6A800DC435C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /Users/johnterracina/Johns_Documents/Programming/Conway/Cocoa/Conway;
+			dstSubfolderSpec = 0;
+			files = (
+				415B3A6916EFC6C000DC435C /* Conway.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5267101913EAEECA009CF4F1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -236,6 +247,7 @@
 				52670FC813E8B40B009CF4F1 /* Sources */,
 				52670FC913E8B40B009CF4F1 /* Frameworks */,
 				52670FCA13E8B40B009CF4F1 /* Resources */,
+				415B3A6816EFC6A800DC435C /* CopyFiles */,
 			);
 			buildRules = (
 			);
