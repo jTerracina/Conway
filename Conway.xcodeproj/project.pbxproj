@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41109B3216E684C900331367 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41109B3116E684C900331367 /* icon.icns */; };
+		412040FF16EFC2C6008166A8 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 412040FE16EFC2C6008166A8 /* README.txt */; };
 		52670FD113E8B40B009CF4F1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52670FD013E8B40B009CF4F1 /* Cocoa.framework */; };
 		52670FDB13E8B40B009CF4F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52670FD913E8B40B009CF4F1 /* InfoPlist.strings */; };
 		52670FDD13E8B40B009CF4F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52670FDC13E8B40B009CF4F1 /* main.m */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		41109B3116E684C900331367 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		412040FE16EFC2C6008166A8 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		52670FCC13E8B40B009CF4F1 /* Conway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52670FD013E8B40B009CF4F1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52670FD313E8B40B009CF4F1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -160,6 +162,7 @@
 				52670FD713E8B40B009CF4F1 /* Supporting Files */,
 				52C258C513FEE64A00F4AC63 /* LifeView.h */,
 				52C258C613FEE64A00F4AC63 /* LifeView.m */,
+				412040FE16EFC2C6008166A8 /* README.txt */,
 			);
 			path = Conway;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				52670FE113E8B40B009CF4F1 /* Credits.rtf in Resources */,
 				52670FE713E8B40C009CF4F1 /* MainMenu.xib in Resources */,
 				41109B3216E684C900331367 /* icon.icns in Resources */,
+				412040FF16EFC2C6008166A8 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
