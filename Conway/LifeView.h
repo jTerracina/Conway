@@ -10,16 +10,23 @@
 #import "LifeBoard.h"
 
 
+
 @interface LifeView : NSView
 {
+    CGFloat viewWidth;
+    CGFloat viewHeight;
+    CGFloat rectWidth;
+    CGFloat rectHeight;
     CGFloat margin;
     LifeBoard * board;
     board_point current_cell;
+    bool needs_redraw;
 
 }
 
 -(void) setLifeBoard:(LifeBoard*)theBoard;
--(void) refreshView;
+
+-(void) drawCell;
 -(board_point) NSPoint2board_point:(NSPoint)thePoint;
 
 @end

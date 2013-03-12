@@ -18,7 +18,7 @@
     theBoard = [[LifeBoard alloc] initWithWidth:24 andHeight:24];
     [gridView setLifeBoard:theBoard];
     
-    [gridView refreshView];
+    [gridView setNeedsDisplay:YES];
     [widthNumBox setIntValue:theBoard.width];
     [heightNumBox setIntValue:theBoard.height];
     
@@ -33,22 +33,22 @@
 - (void) run_once{
     if (is_running){
         [theBoard iterate];
-        [gridView refreshView];
+        [gridView setNeedsDisplay:YES];
         [generationNumLabel setIntValue:[generationNumLabel intValue]+1];
     }
 }
 
 
 -(IBAction) changeBoardSize:(id) sender{
-    [theBoard resizeBoardWithWidth:[widthNumBox intValue] andHeight:[heightNumBox intValue]];
-    [gridView refreshView];
+    [theBoard nonDestructiveResizeBoardWithWidth:[widthNumBox intValue] andHeight:[heightNumBox intValue]];
+    [gridView setNeedsDisplay:YES];
 }
 
 -(IBAction)clearButtonPressed:(id)sender{
     [self stopButtonPressed:sender];
     [theBoard zeroOutBoard];
     [generationNumLabel setIntValue:0];
-    [gridView refreshView];
+    [gridView setNeedsDisplay:YES];
 }
 -(IBAction)startButtonPressed:(id)sender{
     is_running = true;
@@ -59,7 +59,7 @@
 -(IBAction)iterateButtonPressed:(id)sender{
     [theBoard iterate];
     [generationNumLabel setIntValue:[generationNumLabel intValue]+1];
-    [gridView refreshView];
+    [gridView setNeedsDisplay:YES];
 }
 -(IBAction)speedSliderMoved:(id)sender{
     double minDelay = 1.0/20.0; //20 fps

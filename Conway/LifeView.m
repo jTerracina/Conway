@@ -7,6 +7,7 @@
 //
 
 #import "LifeView.h"
+#include <malloc/malloc.h>
 
 @implementation LifeView
 
@@ -19,7 +20,7 @@
         board = NULL;
     }
     margin = 10.0;
-
+    needs_redraw = YES;
     return self;
 }
 
@@ -31,6 +32,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    //NSLog(@"rect");
     [NSGraphicsContext saveGraphicsState];
     if (board == NULL){
         NSRect bkgdrect = CGRectInset([self bounds], 5, 5);
@@ -39,7 +41,57 @@
         [bkgd fill];
     }
     else {
-        [self refreshView];
+       //[self refreshView];
+        if (needs_redraw){
+            [[NSColor blackColor] set];
+            NSRect bkgdrect = CGRectInset([self bounds], 0, 0);
+            NSBezierPath *bkgd = [NSBezierPath bezierPathWithRoundedRect:bkgdrect xRadius:5 yRadius:5];
+            [bkgd fill];
+            
+            
+            int row, col;
+            viewWidth = [self bounds].size.width - margin;
+            viewHeight = [self bounds].size.height - margin;
+            rectWidth = viewWidth/(board.width);
+            rectHeight = viewHeight/(board.height);
+            NSRect rectTemplate = CGRectMake(1.5, 1.5, rectWidth-3,  rectHeight-3);
+            for (row=0; row < board.width; row++)
+            {
+                for (col=0; col<board.height; col++)
+                {
+                    NSRect rectToDraw = CGRectOffset(rectTemplate, row*rectWidth +margin/2, col*rectHeight + margin/2 );
+                    //NSLog(@"%f %f %f %f", rectToDraw.origin.x, rectToDraw.origin.y, rectToDraw.size.width, rectToDraw.size.height);
+                    NSBezierPath *pathOfRect = [NSBezierPath bezierPathWithRect:rectToDraw];
+                    if ([board cellAtX:row Y:col] == 1){[[NSColor blueColor] set];}
+                    else {[[NSColor whiteColor] set];}
+                    [pathOfRect fill];
+                    [pathOfRect stroke];
+                    
+                }
+            }
+            //needs_redraw = NO;
+            [board changesApplied];
+        }
+        else{
+            //Draw only individual cells
+            int i;
+            viewWidth = [self bounds].size.width - margin;
+            viewHeight = [self bounds].size.height - margin;
+            rectWidth = viewWidth/(board.width);
+            rectHeight = viewHeight/(board.height);
+            NSRect rectTemplate = CGRectMake(1.5, 1.5, rectWidth-3,  rectHeight-3);
+            for (i = 0; i < [board.changedPoints count]; i++){
+                BoardPoint * pt = [board.changedPoints objectAtIndex:i];
+                NSRect rectToDraw = CGRectOffset(rectTemplate, pt.x*rectWidth +margin/2, pt.y*rectHeight + margin/2 );
+                NSBezierPath *pathOfRect = [NSBezierPath bezierPathWithRect:rectToDraw];
+                if ([board cellAtX:pt.x Y:pt.y] == 1){[[NSColor blueColor] set];}
+                else {[[NSColor whiteColor] set];}
+                [pathOfRect fill];
+                [pathOfRect stroke];
+            }
+            [board changesApplied];
+        }
+    
     }
   
         
@@ -49,42 +101,32 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
--(void) refreshView
-{
+-(void) drawCell{
+    NSLog(@"speedy");
     [NSGraphicsContext saveGraphicsState];
-    [self lockFocus];
-    
-    
-    [[NSColor blackColor] set];
-    NSRect bkgdrect = CGRectInset([self bounds], 0, 0);
-    NSBezierPath *bkgd = [NSBezierPath bezierPathWithRoundedRect:bkgdrect xRadius:5 yRadius:5];
-    [bkgd fill];
-    
-    
-    int row, col;
-    CGFloat viewWidth = [self bounds].size.width - margin;
-    CGFloat viewHeight = [self bounds].size.height - margin;
-    CGFloat rectWidth = viewWidth/(board.width);
-    CGFloat rectHeight = viewHeight/(board.height);
+    //Draw only individual cells
+    int i;
+    viewWidth = [self bounds].size.width - margin;
+    viewHeight = [self bounds].size.height - margin;
+    rectWidth = viewWidth/(board.width);
+    rectHeight = viewHeight/(board.height);
     NSRect rectTemplate = CGRectMake(1.5, 1.5, rectWidth-3,  rectHeight-3);
-    for (row=0; row < board.width; row++)
-    {
-        for (col=0; col<board.height; col++)
-        {
-            NSRect rectToDraw = CGRectOffset(rectTemplate, row*rectWidth +margin/2, col*rectHeight + margin/2 );
-            //NSLog(@"%f %f %f %f", rectToDraw.origin.x, rectToDraw.origin.y, rectToDraw.size.width, rectToDraw.size.height);
-            NSBezierPath *pathOfRect = [NSBezierPath bezierPathWithRect:rectToDraw];
-            if ([board cellAtX:row Y:col] == 1){[[NSColor blueColor] set];}
-            else {[[NSColor whiteColor] set];}
-            [pathOfRect fill];
-            [pathOfRect stroke];
-            
-        }
+    for (i = 0; i < [board.changedPoints count]; i++){
+        BoardPoint * pt = [board.changedPoints objectAtIndex:i];
+        NSRect rectToDraw = CGRectOffset(rectTemplate, pt.x*rectWidth +margin/2, pt.y*rectHeight + margin/2 );
+        NSBezierPath *pathOfRect = [NSBezierPath bezierPathWithRect:rectToDraw];
+        if ([board cellAtX:pt.x Y:pt.y] == 1){[[NSColor blueColor] set];}
+        else {[[NSColor whiteColor] set];}
+        [pathOfRect fill];
+        [pathOfRect stroke];
     }
-    [self setNeedsDisplay:YES];
-    [self unlockFocus];
+    [self display];
+    [board changesApplied];
     [NSGraphicsContext restoreGraphicsState];
 }
+
+
+
 
 -(void) mouseDown:(NSEvent *)mouseDownEvent{
     NSPoint clickedon = [self convertPoint:mouseDownEvent.locationInWindow fromView:nil];
@@ -116,8 +158,8 @@
 -(board_point)NSPoint2board_point:(NSPoint)thePoint{
     board_point pt;
     //set as Class constants?
-    CGFloat rectWidth = ([self bounds].size.width - margin)/board.width;
-    CGFloat rectHeight = ([self bounds].size.height - margin)/board.height;
+    rectWidth = ([self bounds].size.width - margin)/board.width;
+    rectHeight = ([self bounds].size.height - margin)/board.height;
     
     pt.x = (int)floor((thePoint.x - margin/2)/(rectWidth));
     pt.y = (int)floor((thePoint.y - margin/2)/(rectHeight));

@@ -1537,7 +1537,6 @@
 							<string key="NSFrame">{{337, 20}, {43, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="346757429">
@@ -3174,7 +3173,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="394801754"/>
 							<reference ref="347266677"/>
-							<reference ref="661862020"/>
 							<reference ref="449148225"/>
 							<reference ref="637106164"/>
 							<reference ref="870734627"/>
@@ -3186,6 +3184,7 @@
 							<reference ref="340348007"/>
 							<reference ref="857313970"/>
 							<reference ref="1000634498"/>
+							<reference ref="661862020"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
